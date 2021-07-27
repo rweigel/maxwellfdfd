@@ -1,4 +1,6 @@
-clear all; close all; clear classes; clc;
+clear all;
+%close all;
+clear classes; clc;
 
 %% Set flags.
 inspect_only = false;
@@ -10,12 +12,14 @@ flux_x1 = -200; flux_x2 = 200;
 
 % (silver)
 [E, H, obj_array, src_array, J] = maxwell_run(...
-	'OSC', 1e-9, 1550, ...
+	'OSC', 1e-9, 1000, ...
 	'DOM', {'vacuum', 'none', 1.0}, [-1100, 1100; -1100, 2600; 0, 10], 10, BC.p, [100 100 0],...
 	'OBJ', ...
-		{'CRC/Ag', gray}, Box([-1100, -80; 0, 1000; 0, 10]), Box([80, 1100; 0, 1000; 0, 10]), ...  % metal slit
-	'SRCM', PlaneSrc(Axis.y, -500, Axis.z), ...
+        {'Palik/H2O', gray}, Box([-1100, 1100; 0, 1000; 0, 10]), ...  % metal slit
+    'SRCM', PlaneSrc(Axis.y, 500, Axis.z), ...
 	inspect_only);
+
+%{'CRC/Ag', gray}, Box([-1100, -80; 0, 1000; 0, 10]), Box([80, 1100; 0, 1000; 0, 10]), ...  % metal slit
 
 % % (true PEC)
 % [E, H, obj_array, src_array, J] = maxwell_run(...
@@ -68,11 +72,11 @@ flux_x1 = -200; flux_x2 = 200;
 
 if ~inspect_only
 	%% Visualize the solution.
-	figure
+	figure(1)
 	clear opts
-	opts.withobjsrc = true;
+	opts.withobjsrc = false;
 	opts.withabs = true;  % true: abs(solution), false: real(solution)
-	opts.withpml = false;  % true: show PML, false: do not show PML
+	opts.withpml = true;  % true: show PML, false: do not show PML
 	opts.withgrid = false;
 % 	opts.withinterp = false;
 % 	opts.cscale = 1e-1;
