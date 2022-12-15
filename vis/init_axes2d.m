@@ -27,11 +27,11 @@ hr = rotate3d;
 setAllowAxesRotate(hr, axes_handle, false);
 
 % set(axes_handle, 'FontSize', 18, 'FontWeight', 'Bold');
-str = [char(grid2d.axis(h)), '  (', char(hex2dec('00D7'))];
+str = [char(grid2d.axis(h)), '/'];
 if grid2d.unitvalue < 1e5 && grid2d.unitvalue > 1e-3
-	str = [str, num2str(grid2d.unitvalue), ')'];
+	str = [str, num2str(grid2d.unitvalue)];
 else
-	str = [str, num2str(grid2d.unitvalue, '%.2e'), ')'];
+	str = [str, num2str(grid2d.unitvalue, '%.2e')];
 end
 
 xlabel(axes_handle, str, 'Rotation', 0, 'FontSize', 15); 

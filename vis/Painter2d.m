@@ -305,18 +305,18 @@ classdef Painter2d < handle
 			if this.withabs && ~(str(1)=='|' && str(end)=='|')
 				str = ['|', str, '|'];
 			end
-			str = [str, ' for \lambda_0 = ', num2str(this.scalar2d.osc.in_L0())];
+			str = ['$', str, '$ for $\lambda_0 = ', num2str(this.scalar2d.osc.in_L0()), '$'];
 			
 			if ~isnan(this.scalar2d.intercept)
-				str = [str, '  at  ', char(this.scalar2d.grid2d.normal_axis), ' = '];
+				str = ['$', str, '$ at $', char(this.scalar2d.grid2d.normal_axis), ' = '];
 				intercept = this.scalar2d.intercept;
 				if intercept == 0 || (abs(intercept) < 1e5 && abs(intercept) > 1e-3)
-					str = [str, num2str(intercept)];
+					str = [str, num2str(intercept),'$'];
 				else
-					str = [str, num2str(intercept, '%.2e')];
+					str = [str, num2str(intercept, '%.2e'),'$'];
 				end
-			end
-			title(axes_handle, str);
+            end
+			title(axes_handle, str, 'Interpreter','Latex');
 
 			surface_handle = pcolor(axes_handle, this.Xh, this.Yv, this.C);
             
@@ -449,8 +449,8 @@ classdef Painter2d < handle
 % 					end
 					plot_handle_array = [plot_handle_array(1:end), h];
 				end
-			end
-			title(axes_handle, title_curr);
+            end
+			title(axes_handle, title_curr, 'Interpreter', 'Latex');
 			xlabel(axes_handle, xlabel_curr);
 			ylabel(axes_handle, ylabel_curr);
 		end

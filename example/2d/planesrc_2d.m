@@ -1,6 +1,7 @@
 clear all; 
 %close all;
-clear classes; clc;
+clear classes;
+%clc;
 
 %% Set flags.
 inspect_only = false;
@@ -23,12 +24,23 @@ wvlen = 15;
 if 1
     polarization = Axis.z;
     prop = Axis.y; % (incidence in y-direction)
-    angle = 0;
+    [E, H, obj_array, src_array, J] = maxwell_run(...
+    	'OSC', 1e-9, wvlen, ...
+        'DOM', {'vacuum', 'none', 1.0}, [-50, 50; -60, 60; 0, 1], 1, BC.p, [0 10 0], ...
+        'OBJ', {'vacuum', 'none', 2+2j}, Box([-50, 0; -60,0; 0, 10]), ...
+               {'vacuum', 'none', 1+1j}, Box([  0, 50; -60, 0; 0, 10]),...
+    	'SRCJ', PlaneSrc(prop, 10, polarization), ...  % PlaneSrc(plane_normal_axis, intercept, polarization_axis)
+        inspect_only);  
+end
+
+if 0
+    polarization = Axis.z;
+    prop = Axis.y; % (incidence in y-direction)
     [E, H, obj_array, src_array, J] = maxwell_run(...
     	'OSC', 1e-9, wvlen, ...
         'DOM', {'vacuum', 'none', 1.0}, [-50, 50; -60, 60; 0, 1], 1, BC.p, [0 10 0], ...
         'OBJ', {'vacuum', 'none', 1.0 - .1j}, Box([-50, 0; -60,0; 0, 10]), ...
-               {'vacuum', 'none', 1.0 - .2j}, Box([  0, 50; -60, 0; 0, 10]),...
+               {'vacuum', 'none', 1.0 - .1j}, Box([  0, 50; -60, 0; 0, 10]),...
     	'SRCJ', PlaneSrc(prop, 10, polarization), ...  % PlaneSrc(plane_normal_axis, intercept, polarization_axis)
         inspect_only);  
 end
@@ -51,7 +63,7 @@ figure(1);
 clear opts;
 opts.withobjsrc = true;
 opts.withinterp = false;
-opts.withpml = false;
+opts.withpml = true;
 vis2d(E{polarization}, Axis.z, 0, obj_array, src_array, opts)
 
 if 0

@@ -14,6 +14,8 @@ if crange(1) == 0 && ticks(1) > 0
 end
 set(axes_handle, 'YTick', ticks);
 
+return
+
 % Prevent 'x10^n' from showing on top of the colorbar.
 ticklabel = textscan(num2str(ticks),'%s');
 ticklabel = ticklabel{1};

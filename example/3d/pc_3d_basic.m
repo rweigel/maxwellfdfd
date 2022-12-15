@@ -1,7 +1,7 @@
 clear all; close all; clear classes; clc;
 
 %% Set flags.
-is_new = true;
+is_new = false;
 inspect_only = false;
 filenamebase = 'pc_3d_basic';
 

@@ -1,7 +1,7 @@
 clear all; close all; clear classes; clc;
 
 %% Set flags.
-inspect_only = true;
+inspect_only = false;
 
 %% Solve the system.
 gray = [0.5 0.5 0.5];  % [r g b]
@@ -18,7 +18,7 @@ solveropts.method = 'aws';
 %% Visualize the solution.
 if ~inspect_only
 	figure;
-	clear opts;
+	%clear opts;
 	opts.withabs = true;
 	opts.withgrid = true;
 	visall(E{Axis.x}, obj_array, src_array, opts);
